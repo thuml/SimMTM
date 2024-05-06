@@ -60,6 +60,8 @@ parser.add_argument('--activation', type=str, default='gelu', help='activation')
 parser.add_argument('--output_attention', action='store_true', help='whether to output attention in ecoder')
 parser.add_argument('--individual', type=int, default=0, help='individual head; True 1 False 0')
 parser.add_argument('--pct_start', type=float, default=0.3, help='pct_start')
+parser.add_argument('--patch_len', type=int, default=12, help='path length')
+parser.add_argument('--stride', type=int, default=12, help='stride')
 
 # optimization
 parser.add_argument('--num_workers', type=int, default=5, help='data loader num workers')

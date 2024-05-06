@@ -40,7 +40,7 @@ class Pooler_Head(nn.Module):
 
 class Model(nn.Module):
     """
-    SimMTM
+    Transformer with channel independent + SimMTM
     """
 
     def __init__(self, configs):

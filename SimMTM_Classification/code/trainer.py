@@ -117,6 +117,8 @@ def model_pretrain(model, model_optimizer, model_scheduler, train_loader, config
 
     model.train()
     for batch_idx, (data, labels) in enumerate(train_loader):
+        model_optimizer.zero_grad()
+
         data_masked_m, mask = data_transform_masked4cl(data, args.masking_ratio, args.lm, args.positive_nums)
         data_masked_om = torch.cat([data, data_masked_m], 0)
 
@@ -126,7 +128,6 @@ def model_pretrain(model, model_optimizer, model_scheduler, train_loader, config
         # Produce embeddings of original and masked samples
         loss, loss_cl, loss_rb = model(data_masked_om, pretrain=True)
 
-        model_optimizer.zero_grad()
         loss.backward()
         model_optimizer.step()
 
@@ -157,6 +158,9 @@ def model_finetune(model, val_dl, device, model_optimizer, model_scheduler, clas
     trgs = np.array([])
 
     for data, labels in val_dl:
+        model_optimizer.zero_grad()
+        classifier_optimizer.zero_grad()
+
         data, labels = data.float().to(device), labels.long().to(device)
 
         # Produce embeddings
